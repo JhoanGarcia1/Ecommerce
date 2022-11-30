@@ -1,3 +1,6 @@
+body{
+    background-color: rgb(0, 0, 0);
+}
 .text-diamond{
     color: #f4d967 !important; 
 }
@@ -17,9 +20,10 @@
     width: 80px;
 }
 #main .carousel-inner img{
-    max-height: 80vh;
-    object-fit: cover;
-    filter: grayscale(70%);
+    max-height: 70vh;
+    object-fit: contain;
+    filter: grayscale(2%);
+    background-color: white;
 }
 #carousel{
     position: relative;
@@ -37,6 +41,16 @@
 #carousel .overlay .row{
     height: 100%;
 }
+.row small{
+    color: aliceblue;
+}
+.row h2{
+    color: aliceblue;
+    margin-bottom: 20px;
+}
+#text-comens{
+    color: aliceblue;
+}
 #place-item {
     background-color: hwb(210deg 13% 84%);
     color: white;
@@ -45,7 +59,7 @@
     max-width: 100%;
 }
 #footer{
-    background: linear-gradient(90deg, #1c3643, #273b47 25%, #1e5372);
+    background: rgb(33 37 41);
 }
 #footer a {
     color: white;
