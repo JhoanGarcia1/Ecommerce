@@ -37,7 +37,7 @@
                 <a class="nav-link" href="#Contactanos">Contáctanos</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link text-diamond" href="./iniciarSesion.html">Iniciar Sesión</a>
+                <a class="nav-link text-diamond" href="./iniciarSesion.php">Iniciar Sesión</a>
               </li>
             </ul>
           </div>

@@ -1,128 +1,100 @@
-CREATE DATABASE Ecomerce;
+CREATE DATABASE ecomerce;
 
-USE Ecomerce
+USE ecomerce;
 
-CREATE TABLE  `Usuarios`(
-    `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-    `Nombres` VARCHAR(10) NOT NULL,
-    `Apellidos` VARCHAR(15) NOT NULL,
-    `Correo_Electronico` VARCHAR(30) NOT NULL UNIQUE,
-    `Contraseña` VARCHAR(35) NOT NULL,
-    `Nickname` VARCHAR(10) NOT NULL,
-    `Estado` BOOLEAN NOT NULL DEFAULT ,
-    `Numero_Celular` INT(10) NOT NULL UNIQUE,
-    `Created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `Updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    PRIMARY KEY(id)
+CREATE TABLE `ecomerce`.`usuarios1` (
+  `idUsuarios` BIGINT NOT NULL AUTO_INCREMENT,
+  `Nombres` VARCHAR(45) NOT NULL,
+  `Apellidos` VARCHAR(45) NOT NULL,
+  `Correo_Electronico` VARCHAR(45) UNIQUE NOT NULL,
+  `Contraseña` VARCHAR(45) NOT NULL,
+  `Nickname` VARCHAR(45) UNIQUE NOT NULL,
+  `Estado` CHAR(20) NOT NULL,
+  `Numero_Celular` INT UNSIGNED NOT NULL,
+  `Creado` TIMESTAMP(2) NOT NULL DEFAULT NOW(),
+  `Actualizado` TIMESTAMP(2) NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (`idUsuarios`)
 );
 
-CREATE TABLE `Pagos`(
-    `Serial_Pago` VARCHAR(30) NOT NULL,
-    `Descripción` VARCHAR(30) NOT NULL,
-    `Estado` BOOLEAN NOT NULL ,
-    `Metodo_Pago` VARCHAR(30) NOT NULL,
-    `Valor_Pago` DECIMAL(7,3) NOT NULL,
-    `Create_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+CREATE TABLE `ecomerce`.`pagos` (
+  `Serial_Pago` INT NOT NULL AUTO_INCREMENT,
+  `Descripción` TEXT(2) NOT NULL,
+  `Estado` CHAR(20) NOT NULL,
+  `Metodo_Pago` VARCHAR(45) NOT NULL,
+  `Valor_Pago` DECIMAL(7,3) NOT NULL,
+  `Creado` TIMESTAMP(2) NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (`Serial_Pago`)
+  );
 
-    PRIMARY KEY (Serial_Pago)
-    FOREIGN KEY(Factura),
-),
+CREATE TABLE `ecomerce`.`Factura` (
+  `idFactura` INT NOT NULL AUTO_INCREMENT,
+  `Producto` VARCHAR(45) NOT NULL,
+  `Cantidad` INT NOT NULL,
+  `Subtotal` DECIMAL(7,3) NOT NULL,
+  `Total` DECIMAL(7,3) NOT NULL,
+  `Creado` TIMESTAMP(2) NOT NULL DEFAULT NOW(),
+  `Actualizado` TIMESTAMP(2) NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (`idFactura`)
+);
 
-CREATE TABLE `Factura`(
-    `id` INT(20) NOT NULL AUTO_INCREMENT,
-    `Cantidad` INT(10) NOT NULL,
-    `Sub_Total` DECIMAL(7,3) NOT NULL,
-    `Total_Factura` DECIMAL(7,3) NOT NULL,
-    `Created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `Updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+CREATE TABLE `ecomerce`.`productos` (
+  `Serial` INT NOT NULL UNIQUE AUTO_INCREMENT,
+  `Nombre_Producto` VARCHAR(45) NOT NULL,
+  `Marca` VARCHAR(45) NOT NULL,
+  `Descripción` VARCHAR(45) NOT NULL,
+  `Atributos` VARCHAR(45) NOT NULL,
+  `Precio` DECIMAL(7,3) NOT NULL,
+  `Url_Imagen` VARCHAR(255) NOT NULL UNIQUE,
+  `Stock` INT NOT NULL,
+  `Creado` TIMESTAMP(2) NOT NULL DEFAULT NOW(),
+  `Actualizado` TIMESTAMP(2) NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (`Serial`)
+);
 
-    PRIMARY KEY(id),
+CREATE TABLE `ecomerce`.`categorias` (
+  `idCategorias` INT NOT NULL AUTO_INCREMENT,
+  `Nombre_Categoria` VARCHAR(45) NOT NULL,
+  `Creado` VARCHAR(45) NOT NULL DEFAULT NOW(),
+  `Actualizado` VARCHAR(45) NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (`idCategorias`)
+);
 
-    FOREIGN KEY(Usuarios_id BIGINT(20) NOT NULL),
-    FOREIGN KEY(Producto_id Serial INT(15) NOT NULL),
-),
+CREATE TABLE `ecomerce`.`entregas` (
+  `idEntregas` INT NOT NULL AUTO_INCREMENT,
+  `Orden` INT NOT NULL UNIQUE,
+  `Estado` CHAR(20) NOT NULL,
+  `Creado` TIMESTAMP(2) NOT NULL DEFAULT NOW(),
+  `Actualizado` TIMESTAMP(2) NOT NULL DEFAULT NOW(),
+   PRIMARY KEY (`idEntregas`)
+);
 
-CREATE TABLE `Productos`(
-    `Serial` INT (15) NOT NULL,
-    `Nombre_Producto` VARCHAR(50) NOT NULL,
-    `Marca` VARCHAR(15) NOT NULL,
-    `Descripción` TEXT NOT NULL,
-    `Atributos` VARCHAR(150) NOT NULL, 
-    `Precio` DECIMAL(7,3) NOT NULL, 
-    `Url_Imagen` VARCHAR(250) NOT NULL, 
-    `Stock` INT(10) NOT NULL,
-    `Created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `Updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+CREATE TABLE `ecomerce`.`ciudad` (
+  `idCiudad` INT NOT NULL AUTO_INCREMENT,
+  `Dirección` POINT NOT NULL,
+  `Barrio` VARCHAR(45) NOT NULL,
+  `Ciudad` VARCHAR(45) NOT NULL,
+  `Creado` TIMESTAMP(2) NOT NULL DEFAULT NOW(),
+  `Actualizado` TIMESTAMP(2) NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (`idCiudad`)
+);
 
-    PRIMARY KEY(Serial),
+CREATE TABLE `ecomerce`.`blogposts` (
+  `idBlogposts` INT NOT NULL AUTO_INCREMENT,
+  `Titulo` VARCHAR(150) NOT NULL,
+  `Contenido` TEXT(2) NOT NULL,
+  `Estado` CHAR(20) NOT NULL,
+  `Creado` TIMESTAMP(2) NOT NULL DEFAULT NOW(),
+  `Actualizado` TIMESTAMP(2) NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (`idBlogposts`)
+);
 
-    FOREIGN KEY(Factura_id INT(20) NOT NULL),  
-),
-
-CREATE TABLE `Categorias`(
-    `id` INT(20) NOT NULL AUTO_INCREMENT,
-    `Nombre_Categoria` VARCHAR(50) NOT NULL,
-    `Created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `Updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    PRIMARY KEY(id),
-
-    FOREIGN KEY(Serial INT (15) NOT NULL),
-),
-
-CREATE TABLE `Entregas`(
-    `id` INT(20) NOT NULL AUTO_INCREMENT,
-    `Orden` INT(20) NOT NULL,
-    `Estado` BOOLEAN NOT NULL DEFAULT ,
-    `Created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `Updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    PRIMARY KEY(id),
-
-    FOREIGN KEY(Serial INT (15) NOT NULL),
-    FOREIGN KEY(Factura_id INT(20) NOT NULL),
-    FOREIGN KEY(Usuarios_id BIGINT(20) NOT NULL),
-    FOREIGN KEY(Ciudad_id INT(15) NOT NULL),
-),
-
-CREATE TABLE `Ciudad`(
-    `id` INT(20) NOT NULL AUTO_INCREMENT,
-    `Dirección` POINT NOT NULL,
-    `Barrio` VARCHAR(10),
-    `Ciudad` VARCHAR(10),
-    `Created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `Updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    PRIMARY KEY(id),
-
-    FOREIGN KEY(Usuarios_id BIGINT(20) NOT NULL),
-),
-
-CREATE TABLE `Blogposts`(
-    `id` INT(20) NOT NULL AUTO_INCREMENT,
-    `Titulo` VARCHAR(150) NOT NULL,
-    `Fecha_Publicación` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `Contenido` TEXT,
-    `Estado` BOOLEAN NOT NULL DEFAULT ,
-    `Updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    PRIMARY KEY(id),
-
-    FOREIGN KEY(Usuarios_id BIGINT(20) NOT NULL),
-    FOREIGN KEY(Categorias_id INT(15) NOT NULL),
-    FOREIGN KEY(Comentarios_id INT(15) NOT NULL),
-),
-
-CREATE TABLE `Comentarios`(
-    `id` INT(20) NOT NULL AUTO_INCREMENT,
-    `Created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `Updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    PRIMARY KEY(id),
-
-    FOREIGN KEY(Usuarios_id BIGINT(20) NOT NULL),
-),
+CREATE TABLE `ecomerce`.`comentarios` (
+  `idComentarios` INT NOT NULL,
+  `Contenido` TEXT(2) NULL,
+  `Creado` TIMESTAMP(2) NOT NULL DEFAULT NOW(),
+  `Actualizado` TIMESTAMP(2) NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (`idComentarios`)
+);
 
 CREATE TABLE `Tabla_Pivot Posts_Etiquetas`(
     `Created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -135,54 +107,50 @@ CREATE TABLE `Tabla_Pivot Posts_Etiquetas`(
     FOREIGN KEY(Etiqueta_id INT(20) NOT NULL),
 ),
 
-CREATE TABLE `Etiquetas`(   
-    `id` INT(20) NOT NULL AUTO_INCREMENT,
-    `Nombre_Etiqueta` VARCHAR(50) NOT NULL,
+CREATE TABLE `ecomerce`.`etiquetas` (
+  `idEtiquetas` INT NOT NULL AUTO_INCREMENT,
+  `Nombre_Etiqueta` VARCHAR(45) NOT NULL,
+  `Creado` TIMESTAMP(2) NOT NULL DEFAULT NOW(),
+  `Actualizado` TIMESTAMP(2) NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (`idEtiquetas`)
+);
 
-    `Created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `Updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-),
+CREATE TABLE `ecomerce`.`promociones` (
+  `idPromociones` INT NOT NULL,
+  `Nombre_Promoción` VARCHAR(45) NOT NULL,
+  `Fecha_Inicio` DATE NOT NULL,
+  `Fecha_Fin` DATE NOT NULL,
+  `Creado` TIMESTAMP(2) NOT NULL DEFAULT NOW(),
+  `Actualizado` TIMESTAMP(2) NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (`idPromociones`)
+);
 
-CREATE TABLE `Promociones`(
-    `id` INT(20) NOT NULL AUTO_INCREMENT,
-    `Nombre_Promoción` VARCHAR(50) NOT NULL,
-    `Vigencia` DATE NOT NULL, 
+CREATE TABLE `ecomerce`.`proveedor` (
+  `idProveedor` INT NOT NULL,
+  `Nombres` VARCHAR(45) NOT NULL,
+  `Apellidos` VARCHAR(45) NOT NULL,
+  `Correo_Electronico` VARCHAR(45) NOT NULL UNIQUE,
+  `Contraseña` VARCHAR(45) NOT NULL,
+  `Nickname` VARCHAR(45) NOT NULL UNIQUE,
+  `Estado` CHAR(20) NOT NULL,
+  `Numero_Celular` INT UNSIGNED NOT NULL,
+  `Marca_Proveedor` VARCHAR(45) NOT NULL,
+  `Creado` TIMESTAMP(2) NOT NULL DEFAULT NOW(),
+  `Actualizado` TIMESTAMP(2) NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (`idProveedor`)
+);
 
-    PRIMARY KEY(id), 
-
-    FOREIGN KEY(Serial INT (15) NOT NULL),
-),
-
-CREATE TABLE `Proveedor`(
-    `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-    `Nombres` VARCHAR(10) NOT NULL,
-    `Apellidos` VARCHAR(15) NOT NULL,
-    `Correo_Electronico` VARCHAR(30) NOT NULL UNIQUE,
-    `Contraseña` VARCHAR(35) NOT NULL,
-    `Nickname` VARCHAR(10) NOT NULL,
-    `Estado` BOOLEAN NOT NULL DEFAULT ,
-    `Numero_Celular` INT(10) NOT NULL UNIQUE,
-    `Marca_Proveedor` VARCHAR(30) NOT NULL,
-    `Created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `Updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    PRIMARY KEY(id),
-
-    FOREIGN KEY(Serial INT (15) NOT NULL),
-),
-
-CREATE TABLE `Colaborador`(
-    `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-    `Nombres` VARCHAR(10) NOT NULL,
-    `Apellidos` VARCHAR(15) NOT NULL,
-    `Correo_Electronico` VARCHAR(30) NOT NULL UNIQUE,
-    `Contraseña` VARCHAR(35) NOT NULL,
-    `Nickname` VARCHAR(10) NOT NULL,
-    `Estado` BOOLEAN NOT NULL DEFAULT ,
-    `Numero_Celular` INT(10) NOT NULL UNIQUE,
-    `Area` VARCHAR(30) NOT NULL,
-    `Created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `Updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    PRIMARY KEY(id),
+CREATE TABLE `ecomerce`.`colaboradores` (
+  `idColaboradores` INT NOT NULL AUTO_INCREMENT,
+  `Nombres` VARCHAR(45) NOT NULL,
+  `Apellidos` VARCHAR(45) NOT NULL,
+  `Correo_Electronico` VARCHAR(45) NOT NULL UNIQUE,
+  `Contraseña` VARCHAR(45) NOT NULL,
+  `Nickname` VARCHAR(45) NOT NULL UNIQUE,
+  `Estado` CHAR(20) NOT NULL,
+  `Numero_Celular` INT UNSIGNED NOT NULL,
+  `Area` VARCHAR(45) NOT NULL,
+  `Creado` TIMESTAMP(2) NOT NULL DEFAULT NOW(),
+  `Actualizado` TIMESTAMP(2) NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (`idColaboradores`)
 );
