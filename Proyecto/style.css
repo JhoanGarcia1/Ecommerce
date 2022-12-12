@@ -121,3 +121,7 @@ body{
     display: flex;
     justify-content: space-between;
 }
+.error{
+    background-color: tomato;
+    color: black;
+}

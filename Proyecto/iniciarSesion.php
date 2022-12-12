@@ -15,7 +15,7 @@
     <!-- nav -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" >
             <div class="container">
-              <a id="header" class="navbar-brand" href="./index.html">
+              <a id="header" class="navbar-brand" href="./index.php">
                 <img src="../diamond/Untitled.png" alt="Diamond-Logo">
                 Diamond System
               </a>
@@ -50,14 +50,14 @@
             </div> 
             <div class="form">
                 <img src="../diamond/user-286.png" alt="" class="icon-user" >
-            <form action="" class="formulario">
+            <form action="validar.php" method="post" class="formulario">
                 <label for="" class="email">Email</label>
-                <input type="email" class="email-e" placeholder="           example@example.com" required>
+                <input type="email" class="email-e" placeholder="example@example.com" name="Email" required>
                 <br>
                 <label for="" class="password">Password</label>
-                <input type="password" class="password-p" placeholder="                      *********" required>
+                <input type="password" class="password-p" placeholder="*********" name="Password" required>
                 <br>
-                <button type="submit" class="enviar">Log In</button>
+                <button type="submit" value="Ingresar" class="enviar">Log In</button>
                 <button type="submit" class="enviar1">Sign out</button>
                 <br>
                 <a href="/" class="olvidado-contraseña">Forgot my password</a>

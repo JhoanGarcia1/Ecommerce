@@ -15,7 +15,7 @@
     <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" >
         <div class="container">
-          <a id="header" class="navbar-brand" href="#">
+          <a id="header" class="navbar-brand" href="./index.php">
             <img src="../diamond/Untitled.png" alt="Diamond-Logo">
             Diamond System
           </a>
